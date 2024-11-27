@@ -7,7 +7,7 @@ public class ShellSort {
         String outputFileName = "shell_output.txt";
 
         try {
-            // Step 1: 파일에서 데이터 읽기
+            // 파일에서 데이터 읽기
             List<Integer> numbers = new ArrayList<>();
             BufferedReader reader = new BufferedReader(new FileReader(inputFileName));
             String line;
@@ -16,13 +16,13 @@ public class ShellSort {
             }
             reader.close();
 
-            // Step 2: 리스트를 배열로 변환
+            // 리스트를 배열로 변환
             int[] array = numbers.stream().mapToInt(i -> i).toArray();
 
-            // Step 3: Shell Sort 수행
+            // Shell Sort 수행
             shellSort(array);
 
-            // Step 4: 정렬된 데이터를 파일로 출력
+            // 정렬된 데이터를 파일로 출력
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName));
             for (int num : array) {
                 writer.write(num + "\n");
@@ -37,10 +37,10 @@ public class ShellSort {
         }
     }
 
-    // Shell Sort 구현
+    // Shell Sort
     public static void shellSort(int[] A) {
         int n = A.length;
-        int[] gaps = {100, 50, 10, 5, 1}; // 간격 h 배열
+        int[] gaps = {100, 50, 10, 5, 1}; // 간격 h 배열 (100,50,10,5,1 순으로)
 
         for (int gap : gaps) {
             // Gap만큼 떨어진 요소들을 삽입 정렬
