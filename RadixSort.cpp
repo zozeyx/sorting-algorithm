@@ -34,7 +34,7 @@ int main() {
     radixSortMSD(arrMSD, pow(10, maxDigits - 1), maxDigits);
     writeOutputFile(outputMSD, arrMSD);
 
-    cout << "<< outputLSD << " 및 " << outputMSD << " 파일에 저장되었습니다." << endl;
+    cout << outputLSD << " 및 " << outputMSD << " 파일에 저장되었습니다." << endl;
 
     return 0;
 }
