@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-// Function prototypes
+
 void radixSortLSD(vector<int>& arr);
 void radixSortMSD(vector<int>& arr, int exp);
 void readInputFile(const string& filename, vector<int>& arr);
@@ -18,17 +18,16 @@ int main() {
 
     vector<int> arrLSD, arrMSD;
 
-    // Step 1: 파일에서 데이터 읽기
+    // 파일에서 데이터 읽기
     readInputFile(inputFile, arrLSD);
 
-    // arrLSD를 arrMSD로 복사 (원본 데이터 유지)
     arrMSD = arrLSD;
 
-    // Step 2: LSD Radix Sort 수행
+    // LSD Radix Sort 
     radixSortLSD(arrLSD);
     writeOutputFile(outputLSD, arrLSD);
 
-    // Step 3: MSD Radix Sort 수행
+    // MSD Radix Sort 
     int maxNumber = *max_element(arrMSD.begin(), arrMSD.end());
     int maxDigits = log10(maxNumber) + 1; // 최대 자릿수 계산
     radixSortMSD(arrMSD, pow(10, maxDigits - 1));
@@ -55,7 +54,7 @@ void readInputFile(const string& filename, vector<int>& arr) {
     inputFile.close();
 }
 
-// Write output file
+
 void writeOutputFile(const string& filename, const vector<int>& arr) {
     ofstream outputFile(filename);
     if (!outputFile) {
@@ -105,7 +104,7 @@ void radixSortLSD(vector<int>& arr) {
     }
 }
 
-// MSD Radix Sort Helper Function
+// MSD Radix Sort 
 void radixSortMSDUtil(vector<int>& arr, int start, int end, int exp) {
     if (start >= end - 1 || exp == 0) {
         return;
