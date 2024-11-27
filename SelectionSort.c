@@ -28,23 +28,22 @@ int main() {
     return 0;
 }
 
-// Selection Sort 구현
+// Selection Sort 
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
-        int min = i; // 최솟값의 인덱스
+        int min = i; 
         for (int j = i + 1; j < n; j++) {
             if (arr[j] < arr[min]) {
                 min = j;
             }
         }
-        // i와 min 위치의 원소를 교환
         int temp = arr[i];
         arr[i] = arr[min];
         arr[min] = temp;
     }
 }
 
-// 파일에서 데이터를 읽어 배열로 변환
+
 void readInputFile(const char *filename, int **arr, int *size) {
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -52,7 +51,7 @@ void readInputFile(const char *filename, int **arr, int *size) {
         exit(EXIT_FAILURE);
     }
 
-    // 최대 1000개의 숫자를 읽는다고 가정
+    
     int *tempArr = malloc(1000 * sizeof(int));
     int count = 0;
 
@@ -62,11 +61,11 @@ void readInputFile(const char *filename, int **arr, int *size) {
 
     fclose(file);
 
-    *arr = realloc(tempArr, count * sizeof(int)); // 정확한 크기로 재조정
+    *arr = realloc(tempArr, count * sizeof(int)); 
     *size = count;
 }
 
-// 배열을 파일로 출력
+
 void writeOutputFile(const char *filename, int arr[], int size) {
     FILE *file = fopen(filename, "w");
     if (!file) {
