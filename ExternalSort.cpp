@@ -5,7 +5,6 @@
 #include <algorithm>
 using namespace std;
 
-// Function prototypes
 void insertionSort(vector<int>& arr);
 void sortAndSaveChunks(const string& inputFile, vector<string>& tempFiles, int chunkSize);
 void mergeSortedChunks(const vector<string>& tempFiles, const string& outputFile);
@@ -17,13 +16,13 @@ int main() {
 
     vector<string> tempFiles; // 임시 파일 리스트
 
-    // Step 1: 입력 파일을 작은 청크로 나누고 정렬
+    // 입력 파일을 작은 청크로 나누고 정렬
     sortAndSaveChunks(inputFile, tempFiles, chunkSize);
 
-    // Step 2: 임시 파일 병합
+    // 임시 파일 병합
     mergeSortedChunks(tempFiles, outputFile);
 
-    // Step 3: 임시 파일 삭제
+    // 임시 파일 삭제
     for (const string& tempFile : tempFiles) {
         remove(tempFile.c_str());
     }
@@ -33,7 +32,7 @@ int main() {
     return 0;
 }
 
-// Function to perform insertion sort
+// insertion sort
 void insertionSort(vector<int>& arr) {
     for (size_t i = 1; i < arr.size(); i++) {
         int current = arr[i];
@@ -46,7 +45,7 @@ void insertionSort(vector<int>& arr) {
     }
 }
 
-// Step 1: Read input file, sort chunks, and save to temporary files
+// 임시 저장 
 void sortAndSaveChunks(const string& inputFile, vector<string>& tempFiles, int chunkSize) {
     ifstream input(inputFile);
     if (!input) {
@@ -89,7 +88,7 @@ void sortAndSaveChunks(const string& inputFile, vector<string>& tempFiles, int c
     input.close();
 }
 
-// Step 2: Merge sorted chunks
+// 임시파일 병합합
 void mergeSortedChunks(const vector<string>& tempFiles, const string& outputFile) {
     ofstream output(outputFile);
     if (!output) {
@@ -101,7 +100,7 @@ void mergeSortedChunks(const vector<string>& tempFiles, const string& outputFile
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
     vector<ifstream> fileStreams(tempFiles.size());
 
-    // Open all temp files
+    // 임시 파일 열기
     for (size_t i = 0; i < tempFiles.size(); i++) {
         fileStreams[i].open(tempFiles[i]);
         if (!fileStreams[i]) {
@@ -115,7 +114,7 @@ void mergeSortedChunks(const vector<string>& tempFiles, const string& outputFile
         }
     }
 
-    // Merge process
+    // 병합
     while (!minHeap.empty()) {
         auto [minValue, fileIndex] = minHeap.top();
         minHeap.pop();
