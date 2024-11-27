@@ -43,7 +43,6 @@ public class BubbleSort {
         for (int pass = 1; pass < n; pass++) {
             for (int i = 0; i < n - pass; i++) {
                 if (A[i] > A[i + 1]) {
-                    // 자리 바꿈
                     int temp = A[i];
                     A[i] = A[i + 1];
                     A[i + 1] = temp;
