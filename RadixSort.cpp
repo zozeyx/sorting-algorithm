@@ -116,7 +116,8 @@ void radixSortMSDUtil(vector<int>& arr, int start, int end, int exp) {
 
     // Count occurrences of each digit
     for (int i = start; i < end; i++) {
-        count[(arr[i] / exp) % 10]++;
+        int digit = (arr[i] / exp) % 10;
+        count[digit]++;
     }
 
     // Accumulate counts
@@ -136,11 +137,13 @@ void radixSortMSDUtil(vector<int>& arr, int start, int end, int exp) {
     }
 
     // Recursively sort each bucket
-    int prev = start;
     for (int i = 0; i < 10; i++) {
-        int curr = start + count[i];
-        radixSortMSDUtil(arr, prev, curr, exp / 10);
-        prev = curr;
+        int bucketStart = (i == 0) ? start : start + count[i - 1];
+        int bucketEnd = start + count[i];
+
+        if (bucketStart < bucketEnd) { // Only sort non-empty buckets
+            radixSortMSDUtil(arr, bucketStart, bucketEnd, exp / 10);
+        }
     }
 }
 
