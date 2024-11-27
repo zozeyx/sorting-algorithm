@@ -29,7 +29,7 @@ public class BubbleSort {
             }
             writer.close();
             
-            System.out.println("정렬 완료! 결과는 " + outputFileName + " 파일에 저장되었습니다.");
+            System.out.println("" + outputFileName + " 파일에 저장되었습니다.");
         } catch (IOException e) {
             System.err.println("파일 처리 중 오류 발생: " + e.getMessage());
         } catch (NumberFormatException e) {
