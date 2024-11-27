@@ -7,7 +7,7 @@ using namespace std;
 
 // Function prototypes
 void radixSortLSD(vector<int>& arr);
-void radixSortMSD(vector<int>& arr, int exp, int maxDigits);
+void radixSortMSD(vector<int>& arr, int exp);
 void readInputFile(const string& filename, vector<int>& arr);
 void writeOutputFile(const string& filename, const vector<int>& arr);
 
@@ -31,7 +31,7 @@ int main() {
     // Step 3: MSD Radix Sort 수행
     int maxNumber = *max_element(arrMSD.begin(), arrMSD.end());
     int maxDigits = log10(maxNumber) + 1; // 최대 자릿수 계산
-    radixSortMSD(arrMSD, pow(10, maxDigits - 1), maxDigits);
+    radixSortMSD(arrMSD, pow(10, maxDigits - 1));
     writeOutputFile(outputMSD, arrMSD);
 
     cout << outputLSD << " 및 " << outputMSD << " 파일에 저장되었습니다." << endl;
@@ -107,12 +107,11 @@ void radixSortLSD(vector<int>& arr) {
 
 // MSD Radix Sort Helper Function
 void radixSortMSDUtil(vector<int>& arr, int start, int end, int exp) {
-    if (start >= end || exp == 0) {
+    if (start >= end - 1 || exp == 0) {
         return;
     }
 
     vector<int> count(10, 0);
-    vector<int> output(end - start);
 
     // Count occurrences of each digit
     for (int i = start; i < end; i++) {
@@ -120,34 +119,38 @@ void radixSortMSDUtil(vector<int>& arr, int start, int end, int exp) {
         count[digit]++;
     }
 
-    // Accumulate counts
+    // Calculate starting index for each bucket
+    vector<int> bucketStart(10, start);
     for (int i = 1; i < 10; i++) {
-        count[i] += count[i - 1];
+        bucketStart[i] = bucketStart[i - 1] + count[i - 1];
     }
 
-    // Build the output array
-    for (int i = end - 1; i >= start; i--) {
+    // Build sorted order in a temporary array
+    vector<int> temp(end - start);
+    for (int i = start; i < end; i++) {
         int digit = (arr[i] / exp) % 10;
-        output[--count[digit]] = arr[i];
+        temp[bucketStart[digit] - start] = arr[i];
+        bucketStart[digit]++;
     }
 
-    // Copy output back to arr
-    for (int i = 0; i < output.size(); i++) {
-        arr[start + i] = output[i];
+    // Copy sorted order back to the original array
+    for (int i = start; i < end; i++) {
+        arr[i] = temp[i - start];
+    }
+
+    // Restore bucketStart values
+    bucketStart[0] = start;
+    for (int i = 1; i < 10; i++) {
+        bucketStart[i] = bucketStart[i - 1] + count[i - 1];
     }
 
     // Recursively sort each bucket
     for (int i = 0; i < 10; i++) {
-        int bucketStart = (i == 0) ? start : start + count[i - 1];
-        int bucketEnd = start + count[i];
-
-        if (bucketStart < bucketEnd) { // Only sort non-empty buckets
-            radixSortMSDUtil(arr, bucketStart, bucketEnd, exp / 10);
-        }
+        radixSortMSDUtil(arr, bucketStart[i], bucketStart[i] + count[i], exp / 10);
     }
 }
 
 // MSD Radix Sort
-void radixSortMSD(vector<int>& arr, int exp, int maxDigits) {
+void radixSortMSD(vector<int>& arr, int exp) {
     radixSortMSDUtil(arr, 0, arr.size(), exp);
 }
