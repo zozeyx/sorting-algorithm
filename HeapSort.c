@@ -14,13 +14,13 @@ int main() {
     int *arr = NULL;
     int size = 0;
 
-    // Step 1: 파일에서 입력 읽기
+    // 파일에서 입력 읽기
     readInputFile(inputFile, &arr, &size);
 
-    // Step 2: Heap Sort 수행
+    // Heap Sort 수행
     heapSort(arr, size);
 
-    // Step 3: 정렬된 데이터를 파일에 저장
+    // 정렬된 데이터를 파일에 저장
     writeOutputFile(outputFile, arr, size);
 
     printf("%s 파일에 저장되었습니다.\n", outputFile);
@@ -31,12 +31,12 @@ int main() {
     return 0;
 }
 
-// Heap Sort 구현
+// Heap Sort
 void heapSort(int arr[], int n) {
-    // Step 1: 최대 힙 구성
+    // 최대 힙 구성
     buildMaxHeap(arr, n);
 
-    // Step 2: 힙의 크기를 줄이며 정렬
+    // 힙의 크기를 줄이며 정렬
     for (int i = n - 1; i > 0; i--) {
         // 루트와 마지막 원소 교환
         swap(&arr[0], &arr[i]);
@@ -54,7 +54,7 @@ void buildMaxHeap(int arr[], int n) {
     }
 }
 
-// DownHeap 함수
+// DownHeap 
 void downHeap(int arr[], int n, int i) {
     int largest = i;           // 루트를 가장 큰 값으로 가정
     int left = 2 * i + 1;      // 왼쪽 자식
@@ -84,7 +84,7 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-// 파일에서 데이터를 읽어 배열로 변환
+
 void readInputFile(const char *filename, int **arr, int *size) {
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -92,7 +92,7 @@ void readInputFile(const char *filename, int **arr, int *size) {
         exit(EXIT_FAILURE);
     }
 
-    // 최대 1000개의 숫자를 읽는다고 가정
+    
     int *tempArr = malloc(1000 * sizeof(int));
     int count = 0;
 
@@ -102,11 +102,11 @@ void readInputFile(const char *filename, int **arr, int *size) {
 
     fclose(file);
 
-    *arr = realloc(tempArr, count * sizeof(int)); // 정확한 크기로 재조정
+    *arr = realloc(tempArr, count * sizeof(int)); 
     *size = count;
 }
 
-// 배열을 파일로 출력
+
 void writeOutputFile(const char *filename, int arr[], int size) {
     FILE *file = fopen(filename, "w");
     if (!file) {
