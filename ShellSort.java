@@ -40,7 +40,7 @@ public class ShellSort {
     // Shell Sort
     public static void shellSort(int[] A) {
         int n = A.length;
-        int[] gaps = {100, 50, 10, 5, 1}; // 간격 h 배열 (100,50,10,5,1 순으로)
+        int[] gaps = {100, 50, 10, 5, 1}; // 간격 h 배열 (100 -> 50 -> 10 -> 5 -> 1 순으로)
 
         for (int gap : gaps) {
             // Gap만큼 떨어진 요소들을 삽입 정렬
